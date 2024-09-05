@@ -19,7 +19,9 @@ const refreshToken = async (req, res, next) => {
         const username = await getUsernameFromToken(refreshToken);
     
         if (!username) {
-            res.status(401).json({status: 401, message: "Invalid token"});
+            const error = new Error("Invalid token");
+            error.status = 401;
+            throw error;
         }
     
         const user = await User.findOne({username: username});
@@ -27,13 +29,17 @@ const refreshToken = async (req, res, next) => {
         const accessTokensMatch = await bcrypt.compare(accessToken, user.accessToken);
     
         if (!accessTokensMatch) {
-            res.status(401).json({status: 401, message: "Access token is old"});
+            const error = new Error("Access token is old");
+            error.status = 401;
+            throw error;
         }
     
         const refreshTokensMatch = await bcrypt.compare(refreshToken, user.refreshToken);
     
         if (!refreshTokensMatch) {
-            res.status(401).json({status: 401, message: "Refresh token is old"});
+            const error = new Error("Refresh token is old");
+            error.status = 401;
+            throw error;
         }
     
         const newAccessToken = createToken(username);
