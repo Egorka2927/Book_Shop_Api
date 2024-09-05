@@ -1,7 +1,7 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 
-exports.getAllUsers = async (req, res, next) => {
+getAllUsers = async (req, res, next) => {
     try {
         const users = await User.find();
 
@@ -11,7 +11,7 @@ exports.getAllUsers = async (req, res, next) => {
     }
 }
 
-exports.getUser = async (req, res, next) => {
+getUser = async (req, res, next) => {
     try {
         const id = req.params.id;
 
@@ -29,7 +29,7 @@ exports.getUser = async (req, res, next) => {
     }
 }
 
-exports.createUser = async (req, res, next) => {
+createUser = async (req, res, next) => {
     try {
         const user = await User.findOne({username: req.username});
 
@@ -52,7 +52,7 @@ exports.createUser = async (req, res, next) => {
     }
 }
 
-exports.updateUser = async (req, res, next) => {
+updateUser = async (req, res, next) => {
     try {
         const id = req.params.id;
         
@@ -70,7 +70,7 @@ exports.updateUser = async (req, res, next) => {
     }
 }
 
-exports.deleteUser = async (req, res, next) => {
+deleteUser = async (req, res, next) => {
     try {
         const id = req.params.id;
         
@@ -87,3 +87,5 @@ exports.deleteUser = async (req, res, next) => {
         next(error);
     }
 }
+
+module.exports = {getAllUsers, getUser, createUser, updateUser, deleteUser};

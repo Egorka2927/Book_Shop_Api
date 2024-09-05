@@ -1,6 +1,6 @@
 const CartItem = require("../models/CartItem");
 
-exports.getAllCartItems = async (req, res, next) => {
+getAllCartItems = async (req, res, next) => {
     try {
         const cartItems = await CartItem.find();
 
@@ -10,7 +10,7 @@ exports.getAllCartItems = async (req, res, next) => {
     }
 }
 
-exports.getCartItem = async (req, res, next) => {
+getCartItem = async (req, res, next) => {
     try {
         const id = req.params.id;
         const cartItem = await CartItem.findById(id);
@@ -27,7 +27,7 @@ exports.getCartItem = async (req, res, next) => {
     }
 }
 
-exports.createCartItem = async (req, res, next) => {
+createCartItem = async (req, res, next) => {
     try {
         const cartItem = await CartItem.findOne({userId: req.body.userId, bookId: req.body.bookId});
 
@@ -47,7 +47,7 @@ exports.createCartItem = async (req, res, next) => {
     }
 }
 
-exports.updateCartItem = async (req, res, next) => {
+updateCartItem = async (req, res, next) => {
     try {
         const id = req.params.id;
 
@@ -65,7 +65,7 @@ exports.updateCartItem = async (req, res, next) => {
     }
 }
 
-exports.deleteCartItem = async (req, res, next) => {
+deleteCartItem = async (req, res, next) => {
     try {
         const id = req.params.id;
 
@@ -82,3 +82,5 @@ exports.deleteCartItem = async (req, res, next) => {
         next(error);
     }
 }
+
+module.exports = {getAllCartItems, getCartItem, createCartItem, updateCartItem, deleteCartItem};

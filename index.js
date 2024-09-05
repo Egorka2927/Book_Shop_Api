@@ -5,6 +5,7 @@ const userRouter = require("./routes/userRouter");
 const bookRouter = require("./routes/bookRouter");
 const cartItemRouter = require("./routes/cartItemRouter");
 const authRouter = require("./routes/authRouter");
+const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 require('dotenv').config()
 
@@ -17,6 +18,8 @@ const connect = async () => {
 }
 
 app.use(express.json());
+
+app.use(cookieParser());
 
 app.use("/users", userRouter);
 

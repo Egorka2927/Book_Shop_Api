@@ -1,15 +1,16 @@
 const express = require("express");
 const { getAllCartItems, getCartItem, createCartItem, updateCartItem, deleteCartItem } = require("../controllers/cartItemController");
+const { verifyToken } = require("../middlewares/jwtFilter");
 const router = express.Router();
 
-router.get("/", getAllCartItems);
+router.get("/", verifyToken, getAllCartItems);
 
-router.get("/:id", getCartItem);
+router.get("/:id", verifyToken, getCartItem);
 
-router.post("/cart_item", createCartItem);
+router.post("/cart_item", verifyToken, createCartItem);
 
-router.put("/:id", updateCartItem);
+router.put("/:id", verifyToken, updateCartItem);
 
-router.delete("/:id", deleteCartItem);
+router.delete("/:id", verifyToken, deleteCartItem);
 
 module.exports = router;
