@@ -9,27 +9,35 @@ const verifyToken = async (req, res, next) => {
         if (accessToken) {
             jwt.verify(accessToken, process.env.JWT_SECRET_KEY, async (err, decoded) => {
                 if (err) {
-                    res.status(401).json({status: 401, message: "Unauthorized access"});
+                    const error = new Error("Unauthorized access");
+                    error.status = 401;
+                    throw error;
                 } else {
                     try {
                         const user = await User.findOne({username: decoded.username});
         
                         if (!user) {
-                            res.status(401).json({status: 401, message: "User not found"});
+                            const error = new Error("User not found");
+                            error.status = 401;
+                            throw error;
                         }
         
                         req.user = user;
                         next();
                     } catch (error) {
-                        res.status(500).json({status: 500, message: "Internal server error"});
+                        next(error);
                     }
                 }
             });
         } else {
-            res.status(401).json({status: 401, message: "Unauthorized access"});
+            const error = new Error("Unauthorized access");
+            error.status = 401;
+            throw error;
         }
     } catch (error) {
-        res.status(401).json({status: 401, message: "Unauthorized access"});
+        const newError = new Error("Unauthorized access");
+        newError.status = 401;
+        next(newError);
     }
 }
 
