@@ -7,6 +7,7 @@ const cartItemRouter = require("./routes/cartItemRouter");
 const authRouter = require("./routes/authRouter");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
+const cors = require("cors");
 require('dotenv').config()
 
 const connect = async () => {
@@ -16,6 +17,13 @@ const connect = async () => {
         console.log(error);
     }
 }
+
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    optionsSuccessStatus: 200
+}
+
+app.use(cors(corsOptions));
 
 app.use(express.json());
 
